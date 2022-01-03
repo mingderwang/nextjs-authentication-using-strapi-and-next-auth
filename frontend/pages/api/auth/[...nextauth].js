@@ -22,8 +22,10 @@ const options = {
     },
     jwt: async (token, user, account) => {
       const isSignIn = user ? true : false;
-
+      console.log("isSignIn", isSignIn);
+      console.log("user", user);
       if (isSignIn) {
+        console.log("isSignIn", isSignIn);
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/${account.provider}/callback?access_token=${account?.accessToken}`
         );
