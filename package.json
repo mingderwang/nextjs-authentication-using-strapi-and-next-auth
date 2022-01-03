@@ -1,4 +1,5 @@
 {
+  "version": "v0.0.1",
   "scripts": {
     "dev:frontend": "cd frontend && yarn dev",
     "build:frontend": "cd frontend && yarn build",
