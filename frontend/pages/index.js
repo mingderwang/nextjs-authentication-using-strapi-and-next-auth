@@ -1,9 +1,10 @@
-import { getSession, signIn, signOut } from "next-auth/client";
+import { useSession, getSession, signIn, signOut } from "next-auth/client";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
-const IndexPage = ({ session }) => {
+const IndexPage = () => {
+  const [session, loading] = useSession()
   const signInButtonNode = () => {
     if (session) {
       return false;
@@ -57,7 +58,6 @@ const IndexPage = ({ session }) => {
       </div>
     );
   }
-
   return (
     <div className="hero">
       <Head>
@@ -67,19 +67,17 @@ const IndexPage = ({ session }) => {
         {signOutButtonNode()}
         {signInButtonNode()}
       </div>
-      <div className="text">Hello world</div>
+      <div className="text">Hello {session.user.name}</div>
     </div>
   );
 };
 
-export const getServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
-
+export async function getServerSideProps(ctx) {
   return {
     props: {
-      session,
-    },
-  };
-};
+      session: await getSession(ctx)
+    }
+  }
+}
 
 export default IndexPage;
